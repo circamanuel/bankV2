@@ -38,36 +38,32 @@ public class Bank {
 
     private Branch findBranch(String branchName) {
         for (Branch branch : branches) {
-            if (branch.getName().equals(branchName));
-            return branch;
+            if (branch.getName().equals(branchName)) {
+                return branch;
+            }
         }
         return null;
     }
 
-    public boolean listCustomers(String branchName, boolean printTransaction) {
+    public boolean listCustomers(String branchName, boolean showTransactions) {
 
         Branch branch = findBranch(branchName);
-        System.out.println("Customer details for branch " + branchName);
-
-        if (findBranch(branchName) != null) {
-
-            int customerIndex = 1;
-            for (Customer customer : branch.getCustomers()) {
-                System.out.println("Customer: " +  customer.getName() + "[" + customerIndex + "]");
-
-                if (printTransaction) {
+        if (branch != null) {
+            System.out.println("Customer details for branch " + branch.getName());
+            ArrayList<Customer> branchCustomers = branch.getCustomers();
+            for (int i = 0; i < branchCustomers.size(); i++) {
+                Customer branchCustomer = branchCustomers.get(i);
+                System.out.println("Customer: " + branchCustomer.getName() + "[" + (i+1) + "]");
+                if (showTransactions)
                     System.out.println("Transactions");
-                   int transactionIndex = 1;
-
-                   for (Double transaction : customer.getTransactions()) {
-                       System.out.println("[" + transactionIndex + "]" + " Amount " + transaction);
-                       transactionIndex++;
-                   }
+                    ArrayList<Double> transactions = branchCustomer.getTransactions();
+                    for (int j = 0; j < transactions.size(); j++) {
+                        System.out.println("[" + (j+1) + "] Amount " + transactions.get(j));
+                    }
                 }
             }
-            customerIndex++;
+            return true;
         }
         return false;
     }
 }
-

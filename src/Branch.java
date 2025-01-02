@@ -15,15 +15,17 @@ public class Branch {
         return name;
     }
 
-    public List<Customer> getCustomers() {
+    public ArrayList<Customer> getCustomers() {
         return customers;
     }
 
     public boolean newCustomer(String customerName, double initialTransaction) {
         if (findCustomer(customerName) != null) {
+            System.out.println("Customer: " + customerName + " already exists.");
             return false;
         }
         customers.add(new Customer(customerName, initialTransaction));
+        System.out.println("new Customer: " + customerName + " will be added.");
         return true;
     }
 
@@ -31,8 +33,10 @@ public class Branch {
         Customer existingCustomer = findCustomer(customerName);
         if (existingCustomer != null) {
            existingCustomer.addTransaction(transaction);
+           System.out.println("Transaction of: " + transaction + " will be added to " + customerName);
             return true;
         }
+        System.out.println("Customer: " + customerName + " doesn't exists");
         return false;
     }
 
@@ -43,6 +47,7 @@ public class Branch {
                 return customer;
             }
         }
+        System.out.println("findCustomer ->" + customerName + " not found");
         return null;
     }
 }
